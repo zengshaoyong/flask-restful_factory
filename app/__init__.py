@@ -22,6 +22,7 @@ login_manager = LoginManager()
 cache = Cache()
 
 
+# 工厂函数
 def create_app():
     app = Flask(__name__)
     app.config.from_object(configs[APP_ENV])
