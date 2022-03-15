@@ -11,7 +11,6 @@ Flask-Login==0.5.0
 Flask-Migrate==3.1.0
 Flask-RESTful==0.3.9
 Flask-Session==0.4.0
-Flask-Sockets==0.2.1
 Flask-SQLAlchemy==2.5.1
 gevent==21.12.0
 gevent-websocket==0.10.1
@@ -36,3 +35,6 @@ wrapt==1.14.0
 zipp==3.7.0
 zope.event==4.5.0
 zope.interface==5.4.0
+
+tornado~=6.1
+kubernetes~=23.3.0
