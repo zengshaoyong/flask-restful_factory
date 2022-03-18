@@ -52,22 +52,41 @@ class WebSocket(tornado.websocket.WebSocketHandler):
                            command=exec_command,
                            stderr=True, stdin=True,
                            stdout=True, tty=False, _preload_content=False)
-        # response = self.resp.read_stdout()
-        # self.user.write_message(response)
-        # print("成功了")
-        # data = self.resp.read_stdout()
-        # print(data)
+        # commands = [
+        #     "echo This message goes to stdout",
+        #     "echo \"This message goes to stderr\" >&2",
+        # ]
+
+        # while self.resp.is_open():
+        #     self.resp.update(timeout=1)
+        #     if self.resp.peek_stdout():
+        #         print("STDOUT: %s" % self.resp.read_stdout())
+        #     if self.resp.peek_stderr():
+        #         print("STDERR: %s" % self.resp.read_stderr())
+        #     if commands:
+        #         c = commands.pop(0)
+        #         print("Running command... %s\n" % c)
+        #         self.resp.write_stdin(c + "\n")
+        #     else:
+        #         break
+        # self.resp.write_stdin("date\n")
+        # sdate = self.resp.readline_stdout(timeout=3)
+        # print("Server date command returns: %s" % sdate)
+        # self.resp.write_stdin("whoami\n")
+        # user = self.resp.readline_stdout(timeout=3)
+        # print("Server user is: %s" % user)
 
     def on_close(self):
         print('close')
+        self.resp.close()
 
     # self.waiters.remove(self)
 
     def on_message(self, message):
-        print(message)
         if message:
-            self.resp.write_stdin(message)
-            response = self.resp.readline_stdout(timeout=1)
+            # self.resp.update(timeout=1)
+            self.resp.write_stdin(message + "\n")
+            response = self.resp.read_stdout()
             self.user.write_message(response)
 
 
