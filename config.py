@@ -5,6 +5,7 @@ APP_ENV = "test"
 
 class BaseConfig:
     DEBUG = False
+    TESTING = False
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     # SQLALCHEMY_ECHO = True
@@ -31,6 +32,7 @@ class Test(BaseConfig):
     CACHE_REDIS_PASSWORD = 123456789
     CACHE_REDIS_DB = 2
     CACHE_DEFAULT_TIMEOUT = 300
+    DEBUG = True
 
 
 class Product(BaseConfig):

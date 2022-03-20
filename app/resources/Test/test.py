@@ -3,10 +3,11 @@ from flask import jsonify, current_app
 from flask_login import current_user, login_required
 from werkzeug import exceptions
 from app import cache
+import time
 
 
 class HelloWorld(Resource):
-    decorators = [login_required]
+    # decorators = [login_required]
 
     def __init__(self):
         self.parser = reqparse.RequestParser()
@@ -14,6 +15,7 @@ class HelloWorld(Resource):
         self.args = self.parser.parse_args()
 
     def get(self):
-        print(current_user)
-        current_app.logger.info('测试')
-        return {'message': "hello world"}, 201
+        # print(current_user)
+        # current_app.logger.info('测试')
+        # time.sleep(1)
+        return {'data': "hello world", 'message': 'test'}

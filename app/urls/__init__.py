@@ -1,5 +1,2 @@
-from flask import Blueprint
-
-assets_page = Blueprint('assets_page', __name__)
-
-from .apis import api
+from .apis import assets_page
+from .scheduler import assets_page_scheduler
