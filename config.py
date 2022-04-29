@@ -19,7 +19,7 @@ class BaseConfig:
 
 
 class Development(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:123456789@localhost:3306/flask'
+    SQLALCHEMY_DATABASE_URI = "mysql://root:123456789@localhost:3306/flask"
 
 
 class Test(BaseConfig):

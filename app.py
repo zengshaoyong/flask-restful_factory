@@ -5,7 +5,7 @@ monkey.patch_all()
 from app import create_app
 from app.urls import assets_page, assets_page_scheduler
 from gevent.pywsgi import WSGIServer
-from app.models.db import db
+from app.models import db
 
 app = create_app()
 db.create_all(app=app)
