@@ -29,14 +29,14 @@ class Login(Resource):
 
     def __init__(self):
         self.parser = reqparse.RequestParser()
-        self.parser.add_argument('password')
-        self.parser.add_argument('userName')
+        self.parser.add_argument('passWord', required=True, help="密码不能为空")
+        self.parser.add_argument('userName', required=True, help="用户名不能为空")
         self.parser.add_argument('type')
         self.args = self.parser.parse_args()
 
     def post(self):
         username = self.args['userName']
-        password = self.args['password']
+        password = self.args['passWord']
         user = query_user(username)
         if user is None:
             return {'message': '用户不存在'}
