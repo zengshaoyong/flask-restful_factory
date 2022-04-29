@@ -4,7 +4,6 @@ from flask_login import login_user, logout_user, login_required, current_user
 from flask_restful import Resource, reqparse
 from flask import session, abort
 from flask_limiter.util import get_remote_address
-# from app.utils import redis_set, redis_get
 from app.utils.databases.user import query_user
 from flask import current_app
 from app import limiter
@@ -18,14 +17,15 @@ def load_user(username):
         return curr_user
 
 
+# 未登录的直接返回401
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     abort(401)
 
 
 class Login(Resource):
-    decorators = [limiter.limit(limit_value="1 per second", key_func=get_remote_address,
-                                error_message='访问太频繁')]
+    decorators = [limiter.limit(limit_value='1 per second', key_func=get_remote_address,
+                                error_message="访问太频繁")]
 
     def __init__(self):
         self.parser = reqparse.RequestParser()
@@ -61,6 +61,7 @@ class Logout(Resource):
         return {'message': '{} logout successfully'.format(username)}
 
 
+# 获取当前用户的信息
 class CurrentUser(Resource):
     decorators = [limiter.limit(limit_value="1 per second", key_func=lambda: current_user.id,
                                 error_message='访问太频繁'), login_required]
