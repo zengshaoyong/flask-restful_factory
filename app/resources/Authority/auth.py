@@ -46,7 +46,7 @@ class Login(Resource):
             login_user(curr_user)
             session.permanent = True
             current_app.logger.info(username + "登陆成功")
-            return {'message': 'AuthenticationOk'}
+            return {'message': '登录成功', 'status': 'AuthenticationOk'}
         return {'message': '密码错误'}
 
 
@@ -63,7 +63,7 @@ class Logout(Resource):
 
 # 获取当前用户的信息
 class CurrentUser(Resource):
-    decorators = [limiter.limit(limit_value="1 per second", key_func=lambda: current_user.id,
+    decorators = [limiter.limit(limit_value="2 per second", key_func=lambda: current_user.id,
                                 error_message='访问太频繁'), login_required]
 
     @staticmethod

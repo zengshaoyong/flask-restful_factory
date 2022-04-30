@@ -6,6 +6,7 @@ APP_ENV = "test"
 class BaseConfig:
     DEBUG = False
     TESTING = False
+    JSON_AS_ASCII = False
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
     # SQLALCHEMY_ECHO = True
