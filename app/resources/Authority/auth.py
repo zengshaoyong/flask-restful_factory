@@ -3,6 +3,7 @@ from app import login_manager
 from flask_login import login_user, logout_user, login_required, current_user
 from flask_restful import Resource, reqparse
 from flask import session, abort
+from app.utils.redis import redis_set, redis_get
 from flask_limiter.util import get_remote_address
 from app.utils.databases.user import query_user
 from flask import current_app
@@ -11,10 +12,15 @@ from app import limiter
 
 @login_manager.user_loader
 def load_user(username):
-    if query_user(username) is not None:
+    curr_user = None
+    if redis_get('user' + '_' + username):
         curr_user = User()
         curr_user.id = username
-        return curr_user
+    elif query_user(username):
+        curr_user = User()
+        curr_user.id = username
+        redis_set('user' + '_' + username, 'True')
+    return curr_user
 
 
 # 未登录的直接返回401
@@ -55,7 +61,7 @@ class Logout(Resource):
                                 error_message='访问太频繁'), login_required]
 
     @staticmethod
-    def get():
+    def post():
         username = current_user.id
         logout_user()
         return {'message': '{} logout successfully'.format(username)}

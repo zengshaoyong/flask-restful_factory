@@ -7,13 +7,11 @@ expires = 3600
 
 
 def redis_set(key, data):
-    data_key = key
-    redis_client.set(data_key, data, ex=expires)
+    redis_client.set(key, data, ex=expires)
 
 
 def redis_get(key):
-    data_key = key
-    data = redis_client.get(data_key)
+    data = redis_client.get(key)
     if data:
         return str(data.decode('utf-8'))
     return None
